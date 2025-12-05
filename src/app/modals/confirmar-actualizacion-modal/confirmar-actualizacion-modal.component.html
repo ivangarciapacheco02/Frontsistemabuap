@@ -1,0 +1,19 @@
+<div class="wrapper">
+  <div class="icon-close">
+      <button class="btn" (click)="cerrarModal()">
+          <i class="bi bi-x-lg"></i>
+      </button>
+  </div>
+  <div class="body-modal">
+      <h1 class="title-modal">Actualizar evento</h1>
+      <span class="descripcion">¿Deseas actualizar este evento? Los cambios realizados se guardarán permanentemente.</span>
+      <div class="buttons-modal">
+          <button mat-button class="btn-regresar" (click)="cerrarModal()">
+              Cancelar
+          </button>
+          <button mat-button class="btn-confirmar" (click)="confirmar()">
+              Aceptar
+          </button>
+      </div>
+  </div>
+</div>

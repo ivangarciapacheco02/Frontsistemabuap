@@ -1,0 +1,320 @@
+/* Compensa el sidebar en desktop */
+.main-content-eventos {
+  margin-left: 220px;
+  transition: margin-left 0.3s;
+}
+
+@media (max-width: 991px) {
+  .main-content-eventos {
+    margin-left: 0;
+  }
+}
+
+.wrapper {
+  height: auto;
+}
+
+/* Encabezados */
+.header-home-eventos {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+}
+
+/* Cuerpo */
+.body-eventos {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+}
+
+/* Contenedor */
+.container {
+  max-width: 90vw;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* Títulos */
+.title-perfil {
+  display: block;
+  line-height: 1.1;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+  letter-spacing: 0;
+  text-transform: capitalize;
+  opacity: 1;
+  font-family: Nexa-Bold;
+  margin-left: 3rem;
+  font-size: clamp(1.375rem, 1.1rem + 1.2vw, 2.25rem);
+  text-align: left;
+  color: #231F20;
+}
+
+mat-form-field{
+  width: 100%!important;
+  max-width: 100%!important;
+  margin-left: 0!important;
+  margin-right: 0!important;
+  height: auto!important;
+  text-align: left!important;
+  box-sizing: border-box;
+  margin-bottom: 1rem;
+}
+
+/* Agregar padding adicional cuando hay un error de validación visible */
+mat-form-field.mat-form-field-invalid {
+  margin-bottom: 1.5rem;
+}
+
+/* Agregar padding al siguiente elemento cuando el anterior tiene error */
+mat-form-field:has(mat-error:not([hidden])) {
+  margin-bottom: 1.5rem;
+}
+
+/* Para navegadores que no soportan :has(), usar selector de Angular Material */
+::ng-deep .mat-mdc-form-field-subscript-wrapper {
+  min-height: 1.5rem;
+}
+
+/* Agregar espacio adicional después de un campo con error */
+::ng-deep .mat-mdc-form-field-error-wrapper {
+  padding-bottom: 0.5rem;
+}
+
+/* Mejorar el estilo de los campos de formulario */
+::ng-deep .mat-mdc-form-field {
+  .mat-mdc-text-field-wrapper {
+    background-color: #fff;
+  }
+  
+  .mat-mdc-form-field-focus-overlay {
+    background-color: transparent;
+  }
+  
+  &.mat-focused .mat-mdc-form-field-focus-overlay {
+    background-color: rgba(0, 146, 184, 0.04);
+  }
+}
+
+/* Estilos para los selects */
+::ng-deep .mat-mdc-select {
+  .mat-mdc-select-trigger {
+    font-size: 1rem;
+    color: #231F20;
+  }
+}
+
+/* Estilos para los inputs de tiempo */
+::ng-deep input[type="time"] {
+  font-size: 1rem;
+  color: #231F20;
+  padding: 0.5rem;
+}
+
+.section-buttons{
+  width: 100%;
+  max-width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem 0 3rem 0;
+  box-sizing: border-box;
+}
+
+.btn-primary {
+  width: 208px;
+  height: 48px;
+  background-color: #0092B8!important;
+  border-color: #0092B8!important;
+  border-radius: 8px!important;
+  opacity: 1;
+  text-align: center;
+  font-family: Nexa-Bold;
+  font-size: 16px;
+  font-weight: bold;
+  letter-spacing: 0px;
+  color: #FFFFFF;
+  opacity: 1;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: #017895!important;
+  border-color: #017895!important;
+}
+
+.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-danger{
+  width: 208px;
+  height: 48px;
+  border-radius: 8px!important;
+  opacity: 1;
+  text-align: center;
+  font-family: Nexa-Bold;
+  font-size: 16px;
+  font-weight: bold;
+  letter-spacing: 0px;
+  color: #FFFFFF;
+  opacity: 1;
+}
+
+.btn-danger:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.mat-hint-margin {
+  margin-bottom: 1rem;
+}
+
+.invalid-feedback {
+  display: block;
+  font-size: 12px;
+  margin-top: 4px;
+  margin-bottom: 0.5rem;
+}
+
+/* Estilos para la sección de público objetivo */
+.publico-objetivo-container {
+  width: 100%;
+  max-width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+  margin-bottom: 1rem;
+  padding: 1.5rem;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  box-sizing: border-box;
+}
+
+/* Agregar padding adicional cuando el contenedor tiene error */
+.publico-objetivo-container:has(.invalid-feedback) {
+  margin-bottom: 1.5rem;
+}
+
+.publico-objetivo-label {
+  font-family: Nexa-Bold;
+  font-size: 16px;
+  color: #231F20;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.publico-objetivo-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.publico-checkbox-item {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+  
+  &:hover {
+    background-color: rgba(35, 57, 93, 0.05);
+  }
+}
+
+/* Estilos para los checkboxes de Material */
+::ng-deep .mat-mdc-checkbox {
+  .mdc-checkbox {
+    padding: 8px;
+  }
+  
+  .mdc-checkbox__background {
+    border-color: #23395d;
+    border-width: 2px;
+  }
+  
+  &.mdc-checkbox--selected .mdc-checkbox__background {
+    background-color: #23395d;
+    border-color: #23395d;
+  }
+  
+  .mdc-checkbox__checkmark {
+    color: #fff;
+  }
+  
+  .mdc-checkbox__ripple {
+    color: #23395d;
+  }
+}
+
+::ng-deep .mat-mdc-checkbox .mdc-checkbox__checkmark {
+  transform: scale(1.2);
+  stroke-width: 3px;
+}
+
+::ng-deep .mat-mdc-checkbox:hover .mdc-checkbox__background {
+  background-color: rgba(35, 57, 93, 0.1);
+}
+
+::ng-deep .mat-mdc-checkbox-label {
+  font-size: 1rem;
+  color: #231F20;
+  font-weight: 500;
+  margin-left: 0.5rem;
+}
+
+/* Responsive para mobile */
+@media (max-width: 575px) {
+  .title-perfil {
+    margin-left: 0;
+    text-align: center;
+    font-size: clamp(1.35rem, 1.1rem + 1.6vw, 2rem);
+    line-height: 1.15;
+  }
+
+  .container {
+    padding: 0 0.8rem;
+  }
+
+  mat-form-field {
+    width: 100% !important;
+    margin-left: 0;
+  }
+
+  .dias-semana-container {
+    width: 100%;
+    margin-left: 0;
+    padding: 1rem;
+  }
+
+  .btn-primary, .btn-danger {
+    width: 100%;
+    font-size: 14px;
+    height: 48px;
+  }
+
+  .section-buttons {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+
+/* Tablet */
+@media (min-width: 576px) and (max-width: 991px) {
+  .title-perfil {
+    margin-left: 1.5rem;
+  }
+
+  .container {
+    max-width: 95vw;
+  }
+}

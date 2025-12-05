@@ -1,0 +1,127 @@
+<div class="wrapper main-content-eventos">
+  <div class="header-home-eventos">
+  </div>
+  <div class="body-eventos">
+    <div class="row mt-5 mb-5">
+      <div class="col-12">
+        <span class="title-perfil">Bienvenido {{name_user}}</span>
+        <br>
+        <span class="title-perfil">Eventos</span>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row mt-3 mb-5" style="text-align: center;">
+        <div class="col-12">
+          <div class="alert alert-primary" role="alert">
+            <span class="title-table">Lista de eventos</span>
+          </div>
+        </div>
+
+        <!-- Botón Registrar evento (solo para ADMIN) -->
+        <div class="col-12" *ngIf="isAdmin()" style="padding-bottom: 1rem; text-align: right;">
+          <button mat-raised-button color="primary" (click)="goRegistrar()">
+            <mat-icon>add</mat-icon>
+            Registrar evento
+          </button>
+        </div>
+
+        <!-- Filtro de búsqueda -->
+        <div class="col-12" style="padding-bottom: 1rem;">
+          <mat-form-field appearance="outline" style="width: 100%;">
+            <mat-label>Buscar por nombre de evento...</mat-label>
+            <input matInput (keyup)="applyFilter($event)" #input>
+            <mat-icon matSuffix>search</mat-icon>
+          </mat-form-field>
+        </div>
+
+        <ng-container *ngIf="dataSource.data.length > 0; else noData">
+          <div class="table-scroll-wrapper" [class.hide-acciones]="!isAdmin()">
+            <div class="mat-elevation-z8">
+
+              <table mat-table [dataSource]="dataSource" matSort style="min-width: 1400px; width: 100%;">
+
+                <ng-container matColumnDef="nombre_evento">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre del evento </th>
+                  <td mat-cell *matCellDef="let element"> {{element.nombre_evento}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="tipo_evento">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Tipo de evento </th>
+                  <td mat-cell *matCellDef="let element"> {{element.tipo_evento}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="fecha_realizacion">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha </th>
+                  <td mat-cell *matCellDef="let element"> {{element.fecha_display || element.fecha_realizacion}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="horario">
+                  <th mat-header-cell *matHeaderCellDef> Horario </th>
+                  <td mat-cell *matCellDef="let element"> {{element.horario_display || '-'}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="lugar">
+                  <th mat-header-cell *matHeaderCellDef> Lugar </th>
+                  <td mat-cell *matCellDef="let element"> {{element.lugar}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="publico_objetivo">
+                  <th mat-header-cell *matHeaderCellDef> Público objetivo </th>
+                  <td mat-cell *matCellDef="let element"> {{element.publico_objetivo || '-'}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="programa">
+                  <th mat-header-cell *matHeaderCellDef> Programa </th>
+                  <td mat-cell *matCellDef="let element"> {{element.programa_educativo || '-'}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="responsable">
+                  <th mat-header-cell *matHeaderCellDef> Responsable ID </th>
+                  <td mat-cell *matCellDef="let element"> {{element.responsable_nombre || '-'}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="cupo_maximo">
+                  <th mat-header-cell *matHeaderCellDef> Cupo máximo </th>
+                  <td mat-cell *matCellDef="let element"> {{element.cupo_maximo}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="acciones">
+                  <th mat-header-cell *matHeaderCellDef class="acciones-header"> Acciones </th>
+                  <td mat-cell *matCellDef="let element" class="acciones-cell">
+                    <i class="bi bi-pencil-square td-editar" (click)="goEditar(element.id)" title="Editar"></i>
+                    <i class="bi bi-trash3-fill td-eliminar" (click)="delete(element.id)" title="Eliminar"></i>
+                  </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                <!-- Fila por si no se encuentran datos -->
+                <tr class="mat-row" *matNoDataRow>
+                  <td class="mat-cell" [attr.colspan]="displayedColumns.length" style="text-align: center; padding: 20px; font-size: 16px;">
+                    No se encontraron eventos que coincidan con el filtro "{{input.value}}"
+                  </td>
+                </tr>
+              </table>
+            </div>
+
+            <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+              aria-label="Select page of eventos" style="min-width: 1400px; width: 100%;">
+            </mat-paginator>
+          </div>
+        </ng-container>
+
+        <!-- Mensaje si no encuentra resultados -->
+        <ng-template #noData>
+          <div class="row">
+            <div class="col-12">
+              <div class="alert alert-warning" role="alert">
+                No hay eventos registrados.
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>

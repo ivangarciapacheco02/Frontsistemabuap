@@ -1,0 +1,195 @@
+<div class="wrapper main-content-eventos">
+  <div class="header-home-eventos">
+  </div>
+  <div class="body-eventos">
+    <div class="row mt-5 mb-5">
+      <div class="col-12">
+        <span class="title-perfil">{{ editar ? 'Editar evento' : 'Registrar evento' }}</span>
+      </div>
+    </div>
+    <div class="container">
+
+      <form [formGroup]="eventoForm" (ngSubmit)="guardar()">
+        
+        <!-- Nombre del evento -->
+        <mat-form-field class="mat-input" appearance="outline">
+          <mat-label>Nombre del evento</mat-label>
+          <input matInput formControlName="nombre_evento" placeholder="Escribe el nombre del evento" type="text">
+          <mat-error *ngIf="eventoForm.get('nombre_evento')?.hasError('required') && eventoForm.get('nombre_evento')?.touched">
+            Este campo es requerido
+          </mat-error>
+          <mat-error *ngIf="eventoForm.get('nombre_evento')?.hasError('pattern') && eventoForm.get('nombre_evento')?.touched">
+            Solo se permiten letras, números y espacios
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Tipo de evento -->
+        <mat-form-field class="mat-input" appearance="outline">
+          <mat-label>Tipo de evento</mat-label>
+          <mat-select formControlName="tipo_evento">
+            <mat-option *ngFor="let tipo of tiposEvento" [value]="tipo">{{ tipo }}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="eventoForm.get('tipo_evento')?.hasError('required') && eventoForm.get('tipo_evento')?.touched">
+            Este campo es requerido
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Fecha de realización -->
+        <mat-form-field class="mat-input" appearance="outline">
+          <mat-label>Fecha de realización</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="fecha_realizacion" [min]="minDate" placeholder="dd/MM/yyyy">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error *ngIf="eventoForm.get('fecha_realizacion')?.hasError('required') && eventoForm.get('fecha_realizacion')?.touched">
+            Este campo es requerido
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Error de validación de fecha -->
+        <div *ngIf="eventoForm.hasError('fechaInvalida') && eventoForm.get('fecha_realizacion')?.touched" 
+             class="invalid-feedback" style="color: #f44336; margin-top: 0.5rem;">
+          La fecha no puede ser anterior al día actual
+        </div>
+
+        <!-- Hora de inicio -->
+        <mat-form-field class="mat-input" appearance="outline">
+          <mat-label>Hora de inicio</mat-label>
+          <input matInput 
+                 [ngxTimepicker]="timepickerInicio" 
+                 [format]="24"
+                 formControlName="hora_inicio"
+                 readonly>
+          <mat-icon matSuffix (click)="timepickerInicio.open()" style="cursor: pointer;">access_time</mat-icon>
+          <mat-error *ngIf="eventoForm.get('hora_inicio')?.hasError('required') && eventoForm.get('hora_inicio')?.touched">
+            Este campo es requerido
+          </mat-error>
+        </mat-form-field>
+        <ngx-material-timepicker #timepickerInicio [format]="24"></ngx-material-timepicker>
+
+        <!-- Hora de fin -->
+        <mat-form-field class="mat-input" appearance="outline">
+          <mat-label>Hora de finalización</mat-label>
+          <input matInput 
+                 [ngxTimepicker]="timepickerFin" 
+                 [format]="24"
+                 formControlName="hora_fin"
+                 readonly>
+          <mat-icon matSuffix (click)="timepickerFin.open()" style="cursor: pointer;">access_time</mat-icon>
+          <mat-error *ngIf="eventoForm.get('hora_fin')?.hasError('required') && eventoForm.get('hora_fin')?.touched">
+            Este campo es requerido
+          </mat-error>
+        </mat-form-field>
+        <ngx-material-timepicker #timepickerFin [format]="24"></ngx-material-timepicker>
+
+        <!-- Error de validación de horario -->
+        <div *ngIf="eventoForm.hasError('horaInvalida') && eventoForm.get('hora_inicio')?.touched && eventoForm.get('hora_fin')?.touched" 
+             class="invalid-feedback" style="color: #f44336; margin-top: 0.5rem;">
+          La hora de inicio debe ser menor que la hora de finalización
+        </div>
+
+        <!-- Lugar -->
+        <mat-form-field class="mat-input" appearance="outline">
+          <mat-label>Lugar</mat-label>
+          <input matInput formControlName="lugar" placeholder="Escribe el lugar">
+          <mat-error *ngIf="eventoForm.get('lugar')?.hasError('required') && eventoForm.get('lugar')?.touched">
+            Este campo es requerido
+          </mat-error>
+          <mat-error *ngIf="eventoForm.get('lugar')?.hasError('pattern') && eventoForm.get('lugar')?.touched">
+            Solo se permiten letras, números y espacios
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Público objetivo -->
+        <div class="publico-objetivo-container">
+          <label class="publico-objetivo-label">
+            Público objetivo *
+          </label>
+          <div class="publico-objetivo-list">
+            <div class="publico-checkbox-item" *ngFor="let publico of publicoOpciones">
+              <mat-checkbox 
+                [checked]="isPublicoChecked(publico)"
+                (change)="togglePublico(publico)">
+                {{ publico }}
+              </mat-checkbox>
+            </div>
+          </div>
+          <div *ngIf="eventoForm.get('publico_objetivo')?.hasError('required') && eventoForm.get('publico_objetivo')?.touched" 
+               class="invalid-feedback" style="color: #f44336; margin-top: 0.5rem;">
+            Debes seleccionar al menos una opción
+          </div>
+        </div>
+
+        <!-- Programa educativo -->
+        <mat-form-field class="mat-input" appearance="outline">
+          <mat-label>Programa educativo</mat-label>
+          <mat-select formControlName="programa_educativo">
+            <mat-option *ngFor="let programa of programasEducativos" [value]="programa">{{ programa }}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="eventoForm.get('programa_educativo')?.hasError('required') && eventoForm.get('programa_educativo')?.touched">
+            Este campo es requerido
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Responsable del evento -->
+        <mat-form-field class="mat-input" appearance="outline">
+          <mat-label>Responsable del evento</mat-label>
+          <mat-select formControlName="responsable">
+            <mat-option *ngFor="let responsable of responsables" [value]="responsable.id">
+              {{ responsable.nombre }} ({{ responsable.tipo }})
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="eventoForm.get('responsable')?.hasError('required') && eventoForm.get('responsable')?.touched">
+            Este campo es requerido
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Descripción breve -->
+        <mat-form-field class="mat-input" appearance="outline">
+          <mat-label>Descripción breve</mat-label>
+          <textarea matInput formControlName="descripcion" placeholder="Escribe una descripción breve del evento" rows="4" maxlength="300"></textarea>
+          <mat-hint align="end">{{ eventoForm.get('descripcion')?.value?.length || 0 }}/300</mat-hint>
+          <mat-error *ngIf="eventoForm.get('descripcion')?.hasError('required') && eventoForm.get('descripcion')?.touched">
+            Este campo es requerido
+          </mat-error>
+          <mat-error *ngIf="eventoForm.get('descripcion')?.hasError('maxlength') && eventoForm.get('descripcion')?.touched">
+            Máximo 300 caracteres
+          </mat-error>
+          <mat-error *ngIf="eventoForm.get('descripcion')?.hasError('pattern') && eventoForm.get('descripcion')?.touched">
+            Solo se permiten letras, números y signos de puntuación básicos
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Cupo máximo -->
+        <mat-form-field class="mat-input" appearance="outline">
+          <mat-label>Cupo máximo de asistentes</mat-label>
+          <input matInput type="text" formControlName="cupo_maximo" placeholder="Escribe el cupo máximo (1-999)">
+          <mat-error *ngIf="eventoForm.get('cupo_maximo')?.hasError('required') && eventoForm.get('cupo_maximo')?.touched">
+            Este campo es requerido
+          </mat-error>
+          <mat-error *ngIf="eventoForm.get('cupo_maximo')?.hasError('pattern') && eventoForm.get('cupo_maximo')?.touched">
+            Solo se permiten números enteros positivos (1-999)
+          </mat-error>
+          <mat-error *ngIf="eventoForm.get('cupo_maximo')?.hasError('min') && eventoForm.get('cupo_maximo')?.touched">
+            El valor mínimo es 1
+          </mat-error>
+          <mat-error *ngIf="eventoForm.get('cupo_maximo')?.hasError('max') && eventoForm.get('cupo_maximo')?.touched">
+            El valor máximo es 999
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Error de validación a nivel formulario -->
+        <div *ngIf="getFormError()" class="invalid-feedback" style="color: #f44336; margin-bottom: 1rem;">
+          {{ getFormError() }}
+        </div>
+
+        <!-- Botones -->
+        <div class="section-buttons">
+          <button type="button" class="btn btn-danger" (click)="regresar()" [disabled]="loading">Cancelar</button>
+          <button type="submit" class="btn btn-primary" [disabled]="loading || eventoForm.invalid">
+            {{ loading ? 'Guardando...' : (editar ? 'Actualizar' : 'Registrar') }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
